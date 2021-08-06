@@ -9,9 +9,9 @@ import 'package:flutter2_test_firebase/utility/my_constant.dart';
 final Map<String, WidgetBuilder> map = {
   '/authen' : (BuildContext context) => Authen(),
   '/createAccount' : (BuildContext context) => CreateAccount(),
-  'buyerService' : (BuildContext context) => BuyerService(),
-  'salerService' : (BuildContext context) => SalerService(),
-  'riderService' : (BuildContext context) => RiderService(),
+  '/buyerService' : (BuildContext context) => BuyerService(),
+  '/salerService' : (BuildContext context) => SalerService(),
+  '/riderService' : (BuildContext context) => RiderService(),
 };
 
 
@@ -23,7 +23,8 @@ void main()
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget
+{
   const MyApp({Key? key}) : super(key: key);
 
   @override
