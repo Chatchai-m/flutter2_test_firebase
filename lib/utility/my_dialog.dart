@@ -8,15 +8,16 @@ import 'package:geolocator/geolocator.dart';
 
 class MyDialog
 {
-  Future<Null> alertLocationService(BuildContext context) async
+  Future<Null> alertLocationService(BuildContext context, String title, String subtitle) async
   {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) => AlertDialog(
         title: ListTile(
           leading: ShowImage(pathImage: MyConstant.image4,),
-          title: ShowTitle(title: "Location Service ปิดอยู่ ?", textStyle: MyConstant().h2Style()),
-          subtitle: ShowTitle(title: "กรุณาเปิด Location ด้วยครับ", textStyle: MyConstant().h3Style()),
+          title: ShowTitle(title: title, textStyle: MyConstant().h2Style()),
+          subtitle: ShowTitle(title: subtitle, textStyle: MyConstant().h3Style()),
         ),
         actions: [
           TextButton(
@@ -31,4 +32,27 @@ class MyDialog
       )
     );
   }
+
+
+  Future<Null> normalDialog(BuildContext context, String title, String message) async
+  {
+    showDialog(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: ListTile(
+          leading: ShowImage(pathImage: MyConstant.image4,),
+          title: ShowTitle(title: title, textStyle: MyConstant().h2Style(),),
+          subtitle: ShowTitle(title: message, textStyle: MyConstant().h3Style(),),
+        ),
+        children: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text("OK")
+          )
+        ],
+      )
+    );
+  }
+
+
 }

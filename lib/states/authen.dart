@@ -1,5 +1,10 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter2_test_firebase/model/user_model.dart';
 import 'package:flutter2_test_firebase/utility/my_constant.dart';
+import 'package:flutter2_test_firebase/utility/my_dialog.dart';
 import 'package:flutter2_test_firebase/widgets/show_image.dart';
 import 'package:flutter2_test_firebase/widgets/show_title.dart';
 
@@ -15,6 +20,9 @@ class _AuthenState extends State<Authen>
 {
 
   bool statusRedEye = true;
+  final formKey = GlobalKey<FormState>();
+  TextEditingController userController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context)
@@ -25,15 +33,18 @@ class _AuthenState extends State<Authen>
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
           behavior: HitTestBehavior.opaque,
-          child: ListView(
-            children: [
-              buildImage(size),
-              buildAppName(),
-              buildUser(size),
-              buildPassword(size),
-              buildButton(size),
-              buildCreateAccount(),
-            ],
+          child: Form(
+            key: formKey,
+            child: ListView(
+              children: [
+                buildImage(size),
+                buildAppName(),
+                buildUser(size),
+                buildPassword(size),
+                buildButton(size),
+                buildCreateAccount(),
+              ],
+            ),
           ),
         ),
       ),
@@ -72,6 +83,18 @@ class _AuthenState extends State<Authen>
           margin: EdgeInsets.only(top: 16),
           width: size * 0.6,
           child: TextFormField(
+            controller: userController,
+            validator: (value)
+            {
+              if(value!.isEmpty)
+              {
+                return "Please fill User in blank";
+              }
+              else
+              {
+                return null;
+              }
+            },
             decoration: InputDecoration(
               labelStyle: MyConstant().h3Style(),
               labelText: 'User',
@@ -103,6 +126,18 @@ class _AuthenState extends State<Authen>
           margin: EdgeInsets.only(top: 16),
           width: size * 0.6,
           child: TextFormField(
+            controller: passwordController,
+            validator: (value)
+            {
+              if(value!.isEmpty)
+              {
+                return "Please fill User in blank";
+              }
+              else
+              {
+                return null;
+              }
+            },
             obscureText: statusRedEye,
             decoration: InputDecoration(
               labelStyle: MyConstant().h3Style(),
@@ -147,6 +182,13 @@ class _AuthenState extends State<Authen>
             style: MyConstant().myButtonStyle(),
             onPressed: ()
             {
+              if(formKey.currentState!.validate())
+              {
+                String user = userController.text;
+                String password = passwordController.text;
+                print("user : $user, password : $password");
+                checkAuthen(user: user, password: password);
+              }
             },
             child: Text("Login")
           ),
@@ -172,6 +214,54 @@ class _AuthenState extends State<Authen>
           child: Text("Create Account")
         )
       ],
+    );
+  }
+
+
+
+  Future<Null> checkAuthen({ String? user, String? password }) async
+  {
+    String api = MyConstant.domain + "/site/read-user";
+
+    FormData data = FormData.fromMap({ "user" : user });
+    await Dio().post(api, data: data).then(
+      (value)
+      {
+        var rs = jsonDecode(value.data);
+        print(value);
+        if(rs["data"] == null)
+        {
+          MyDialog().normalDialog(context, "User false !!!", "No $user in database.");
+        }
+        else
+        {
+          rs["data"]["id"] = rs["data"]["id"].toString();
+          rs["data"]["createdAt"] = rs["data"]["created_at"];
+          rs["data"]["updatedAt"] = rs["data"]["updated_at"];
+
+          UserModel userModel = UserModel.fromMap(rs["data"]);
+          if(password == userModel.password)
+          {
+            String? type = userModel.type;
+            switch(type)
+            {
+              case "buyer":
+                Navigator.pushNamedAndRemoveUntil(context, MyConstant.routeBuyerService, (route) => false);
+                break;
+              case "seller":
+                Navigator.pushNamedAndRemoveUntil(context, MyConstant.routeSalerService, (route) => false);
+                break;
+              case "rider":
+                Navigator.pushNamedAndRemoveUntil(context, MyConstant.routeRiderService, (route) => false);
+                break;
+            }
+          }
+          else
+          {
+            MyDialog().normalDialog(context, "Password fail !!!!", "");
+          }
+        }
+      }
     );
   }
 
