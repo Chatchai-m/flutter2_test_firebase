@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter2_test_firebase/widgets/show_signout.dart';
 
 class RiderService extends StatefulWidget
 {
@@ -13,7 +14,12 @@ class _RiderServiceState extends State<RiderService>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Rider"),),
+      appBar: AppBar(
+        title: Text("Rider"),
+      ),
+      drawer: Drawer(
+        child: ShowSignOut(),
+      ),
     );
   }
 }

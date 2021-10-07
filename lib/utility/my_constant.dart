@@ -4,7 +4,7 @@ class MyConstant
 {
   //General
   static String appName = "Flutter2 test firebase";
-  static String domain  = "https://6bb47948e323.ngrok.io";
+  static String domain  = "https://c361-58-8-177-98.ngrok.io";
 
   //Route
   static String routeAuthen        = "/authen";
@@ -12,6 +12,7 @@ class MyConstant
   static String routeBuyerService  = "/buyerService";
   static String routeSalerService  = "/salerService";
   static String routeRiderService  = "/riderService";
+  static String routeAddProduct    = "/addProduct";
 
   //Image
   static String image1 = "images/image1.png";
@@ -21,9 +22,24 @@ class MyConstant
   static String avatar = "images/avatar.png";
 
   //Color
-  static Color primary = Color(0xffa9b22b);
-  static Color dark = Color(0xff778300);
-  static Color light = Color(0xffdde45e);
+  static Color primary = Color(0xff87861d);
+  static Color dark    = Color(0xff575900);
+  static Color light   = Color(0xffb9b64e);
+  static Map<int, Color> mapMaterialColor = {
+    50:Color.fromRGBO(255, 87, 89, 0.1),
+    100:Color.fromRGBO(255, 87, 89, 0.2),
+    200:Color.fromRGBO(255, 87, 89, 0.3),
+    300:Color.fromRGBO(255, 87, 89, 0.4),
+    400:Color.fromRGBO(255, 87, 89, 0.5),
+    500:Color.fromRGBO(255, 87, 89, 0.6),
+    600:Color.fromRGBO(255, 87, 89, 0.7),
+    700:Color.fromRGBO(255, 87, 89, 0.8),
+    800:Color.fromRGBO(255, 87, 89, 0.9),
+    900:Color.fromRGBO(255, 87, 89, 1.0),
+  };
+
+
+
 
   //Style
   TextStyle h1Style() => TextStyle(
@@ -38,9 +54,21 @@ class MyConstant
       fontWeight: FontWeight.w800
   );
 
+  TextStyle h2SWhitetyle() => TextStyle(
+      fontSize: 18,
+      color: Colors.white,
+      fontWeight: FontWeight.w800
+  );
+
   TextStyle h3Style() => TextStyle(
       fontSize: 14,
       color: dark,
+      fontWeight: FontWeight.normal
+  );
+
+  TextStyle h3WhiteStyle() => TextStyle(
+      fontSize: 14,
+      color: Colors.white,
       fontWeight: FontWeight.normal
   );
 

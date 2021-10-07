@@ -88,9 +88,15 @@ class _CreateAccountState extends State<CreateAccount>
   {
     Position? position = await findPosition();
 
+    print("\n\n");
     setState(() {
       lat = position!.latitude;
       lng = position.longitude;
+
+      print("\n\n<======= lat, long =======>");
+      print(lat.toString() + "," + lng.toString());
+      print("\n\n");
+
     });
   }
 
@@ -163,8 +169,12 @@ class _CreateAccountState extends State<CreateAccount>
         if(formKey.currentState!.validate())
         {
           // MyDialog().normalDialog(context, "ยังไม่ได้กรอกข้อมูล", "กรุณากรอกข้อมูลให้ครบ");
-          uploadPicture();
+          // uploadPicture();
+
         }
+
+        print("<===== Click button =====>");
+        findLatLng();
       },
       icon: Icon(Icons.cloud_upload)
     );

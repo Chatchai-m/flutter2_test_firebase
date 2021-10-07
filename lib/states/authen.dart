@@ -7,6 +7,7 @@ import 'package:flutter2_test_firebase/utility/my_constant.dart';
 import 'package:flutter2_test_firebase/utility/my_dialog.dart';
 import 'package:flutter2_test_firebase/widgets/show_image.dart';
 import 'package:flutter2_test_firebase/widgets/show_title.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Authen extends StatefulWidget
 {
@@ -225,7 +226,7 @@ class _AuthenState extends State<Authen>
 
     FormData data = FormData.fromMap({ "user" : user });
     await Dio().post(api, data: data).then(
-      (value)
+      (value) async
       {
         var rs = jsonDecode(value.data);
         print(value);
@@ -242,7 +243,7 @@ class _AuthenState extends State<Authen>
           UserModel userModel = UserModel.fromMap(rs["data"]);
           if(password == userModel.password)
           {
-            String? type = userModel.type;
+            String type = userModel.type;
             switch(type)
             {
               case "buyer":
@@ -255,6 +256,10 @@ class _AuthenState extends State<Authen>
                 Navigator.pushNamedAndRemoveUntil(context, MyConstant.routeRiderService, (route) => false);
                 break;
             }
+
+            SharedPreferences preferences = await SharedPreferences.getInstance();
+            preferences.setString("type", type);
+            preferences.setString("user", userModel.user);
           }
           else
           {

@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 class UserModel {
-  final String? id;
-  final String? name;
-  final String? type;
+  final String id;
+  final String name;
+  final String type;
   final String? address;
   final String? phone;
-  final String? user;
-  final String? password;
+  final String user;
+  final String password;
   final String? avata;
   final String? lat;
   final String? lng;
