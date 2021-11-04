@@ -5,6 +5,7 @@ import 'package:flutter2_test_firebase/states/buyer_service.dart';
 import 'package:flutter2_test_firebase/states/create_account.dart';
 import 'package:flutter2_test_firebase/states/rider_service.dart';
 import 'package:flutter2_test_firebase/states/saler_service.dart';
+import 'package:flutter2_test_firebase/states/test.dart';
 import 'package:flutter2_test_firebase/utility/my_constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,6 +16,7 @@ final Map<String, WidgetBuilder> map = {
   '/salerService' : (BuildContext context) => SalerService(),
   '/riderService' : (BuildContext context) => RiderService(),
   '/addProduct' : (BuildContext context) => AddProduct(),
+  '/testPage' : (BuildContext context) => TestPage(),
 };
 
 

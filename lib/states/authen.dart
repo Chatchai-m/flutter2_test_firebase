@@ -44,6 +44,18 @@ class _AuthenState extends State<Authen>
                 buildPassword(size),
                 buildButton(size),
                 buildCreateAccount(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                        onPressed: ()
+                        {
+                          Navigator.pushNamed(context, MyConstant.routeTestPage);
+                        },
+                        child: Text("Test Page")
+                    )
+                  ],
+                )
               ],
             ),
           ),
