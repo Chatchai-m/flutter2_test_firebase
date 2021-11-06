@@ -8,6 +8,23 @@ import 'package:geolocator/geolocator.dart';
 
 class MyDialog
 {
+  Future<Null> showProgressDialog(BuildContext context) async
+  {
+    showDialog(
+      context: context,
+      builder: (context) => WillPopScope(
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+        onWillPop: () async
+        {
+          return false;
+        },
+      ),
+    );
+  }
+
+
   Future<Null> alertLocationService(BuildContext context, String title, String subtitle) async
   {
     showDialog(

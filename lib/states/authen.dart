@@ -270,8 +270,10 @@ class _AuthenState extends State<Authen>
             }
 
             SharedPreferences preferences = await SharedPreferences.getInstance();
+            preferences.setString("id", userModel.id);
             preferences.setString("type", type);
             preferences.setString("user", userModel.user);
+            preferences.setString("name", userModel.name);
           }
           else
           {

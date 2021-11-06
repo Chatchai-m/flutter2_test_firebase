@@ -4,7 +4,7 @@ class MyConstant
 {
   //General
   static String appName = "Flutter2 test firebase";
-  static String domain  = "https://fac8-171-97-98-248.ngrok.io";
+  static String domain  = "https://75ec-171-97-98-248.ngrok.io";
 
   //Route
   static String routeAuthen        = "/authen";

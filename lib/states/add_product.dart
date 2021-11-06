@@ -1,11 +1,15 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter2_test_firebase/utility/my_constant.dart';
 import 'package:flutter2_test_firebase/utility/my_dialog.dart';
 import 'package:flutter2_test_firebase/widgets/show_image.dart';
 import 'package:flutter2_test_firebase/widgets/show_title.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddProduct extends StatefulWidget {
   const AddProduct({ Key? key }) : super(key: key);
@@ -19,6 +23,9 @@ class _AddProductState extends State<AddProduct>
   final formKey = GlobalKey<FormState>();
   List<File?> files = [];
   File? file;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController priceController = TextEditingController();
+  TextEditingController detailController = TextEditingController();
 
   @override
   void initState() {
@@ -85,6 +92,7 @@ class _AddProductState extends State<AddProduct>
       width: constrains.maxWidth * 0.75,
       margin: EdgeInsets.only(top: 16),
       child: TextFormField(
+        controller: nameController,
         validator: (value)
         {
           if(value!.isEmpty)
@@ -131,6 +139,7 @@ class _AddProductState extends State<AddProduct>
       width: constrains.maxWidth * 0.75,
       margin: EdgeInsets.only(top: 16),
       child: TextFormField(
+        controller: priceController,
         validator: (value)
         {
           if(value!.isEmpty)
@@ -177,6 +186,7 @@ class _AddProductState extends State<AddProduct>
       width: constrains.maxWidth * 0.75,
       margin: EdgeInsets.only(top: 16),
       child: TextFormField(
+        controller: detailController,
         validator: (value)
         {
           if(value!.isEmpty)
@@ -358,7 +368,7 @@ class _AddProductState extends State<AddProduct>
     );
   }
 
-  void processAddProduct()
+  Future<Null> processAddProduct() async
   {
     if(formKey.currentState!.validate())
     {
@@ -371,8 +381,56 @@ class _AddProductState extends State<AddProduct>
         }
       }
 
+      print("<===== Save Data =====>");
       if(checkFile)
       {
+        MyDialog().showProgressDialog(context);
+
+        int loop = 0;
+        String apiSaveProduct = MyConstant.domain + "/site/save-product-image";
+        List<String> nameFiles = [];
+        for(var item in files)
+        {
+          int i = Random().nextInt(100000000);
+          String nameFile = 'product$i.png';
+          Map<String, dynamic> map = {};
+          map['file'] = await MultipartFile.fromFile(item!.path, filename: nameFile);
+
+          nameFiles.add(nameFile);
+          FormData data = FormData.fromMap(map);
+          await Dio().post(apiSaveProduct, data:data)
+          .then((value) async {
+            print(value);
+            loop ++;
+            print("success $i");
+            if(loop >= files.length)
+            {
+              SharedPreferences preferences = await SharedPreferences.getInstance();
+              map = {};
+              map['id'] = 0;
+              map['id_seller']   = preferences.getString("id");
+              map['name_seller'] = preferences.getString("name");
+              map['name']        = nameController.text;
+              map['price']       = priceController.text;
+              map['detail']      = detailController.text;
+              map['images']      = nameFiles.toString();
+              print("Image => " + nameFiles.toString() );
+              Navigator.pop(context);
+
+              data = FormData.fromMap(map);
+              String path = MyConstant.domain + "/site/save-product";
+              await Dio().post(path, data: data).then((resp) {
+                print("Success");
+                print(resp);
+                Navigator.pop(context);
+              });
+
+            }
+          });
+
+
+
+        }
       }
       else
       {
