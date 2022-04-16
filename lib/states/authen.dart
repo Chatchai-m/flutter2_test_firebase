@@ -248,7 +248,7 @@ class _AuthenState extends State<Authen>
         }
         else
         {
-          rs["data"]["id"] = rs["data"]["id"].toString();
+          rs["data"]["id"] = rs["data"]["id"];
           rs["data"]["createdAt"] = rs["data"]["created_at"];
           rs["data"]["updatedAt"] = rs["data"]["updated_at"];
 
@@ -270,7 +270,7 @@ class _AuthenState extends State<Authen>
             }
 
             SharedPreferences preferences = await SharedPreferences.getInstance();
-            preferences.setString("id", userModel.id);
+            preferences.setInt("id", userModel.id);
             preferences.setString("type", type);
             preferences.setString("user", userModel.user);
             preferences.setString("name", userModel.name);

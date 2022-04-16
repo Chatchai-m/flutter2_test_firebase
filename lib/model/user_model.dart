@@ -1,7 +1,6 @@
-import 'dart:convert';
-
-class UserModel {
-  final String id;
+class UserModel
+{
+  final int id;
   final String name;
   final String type;
   final String? address;
@@ -11,25 +10,79 @@ class UserModel {
   final String? avata;
   final String? lat;
   final String? lng;
-  final String? createdAt;
-  final String? updatedAt;
-  UserModel({
+  final String? created_at;
+  final String? updated_at;
+
+//<editor-fold desc="Data Methods">
+
+  const UserModel({
     required this.id,
     required this.name,
     required this.type,
-    required this.address,
-    required this.phone,
+    this.address,
+    this.phone,
     required this.user,
     required this.password,
-    required this.avata,
-    required this.lat,
-    required this.lng,
-    required this.createdAt,
-    required this.updatedAt,
+    this.avata,
+    this.lat,
+    this.lng,
+    this.created_at,
+    this.updated_at,
   });
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is UserModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          name == other.name &&
+          type == other.type &&
+          address == other.address &&
+          phone == other.phone &&
+          user == other.user &&
+          password == other.password &&
+          avata == other.avata &&
+          lat == other.lat &&
+          lng == other.lng &&
+          created_at == other.created_at &&
+          updated_at == other.updated_at);
+
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      name.hashCode ^
+      type.hashCode ^
+      address.hashCode ^
+      phone.hashCode ^
+      user.hashCode ^
+      password.hashCode ^
+      avata.hashCode ^
+      lat.hashCode ^
+      lng.hashCode ^
+      created_at.hashCode ^
+      updated_at.hashCode;
+
+  @override
+  String toString() {
+    return 'UserModel{' +
+        ' id: $id,' +
+        ' name: $name,' +
+        ' type: $type,' +
+        ' address: $address,' +
+        ' phone: $phone,' +
+        ' user: $user,' +
+        ' password: $password,' +
+        ' avata: $avata,' +
+        ' lat: $lat,' +
+        ' lng: $lng,' +
+        ' created_at: $created_at,' +
+        ' updated_at: $updated_at,' +
+        '}';
+  }
+
   UserModel copyWith({
-    String? id,
+    int? id,
     String? name,
     String? type,
     String? address,
@@ -39,8 +92,8 @@ class UserModel {
     String? avata,
     String? lat,
     String? lng,
-    String? createdAt,
-    String? updatedAt,
+    String? created_at,
+    String? updated_at,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -53,87 +106,44 @@ class UserModel {
       avata: avata ?? this.avata,
       lat: lat ?? this.lat,
       lng: lng ?? this.lng,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
+      created_at: created_at ?? this.created_at,
+      updated_at: updated_at ?? this.updated_at,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'name': name,
-      'type': type,
-      'address': address,
-      'phone': phone,
-      'user': user,
-      'password': password,
-      'avata': avata,
-      'lat': lat,
-      'lng': lng,
-      'createdAt': createdAt,
-      'updatedAt': updatedAt,
+      'id': this.id,
+      'name': this.name,
+      'type': this.type,
+      'address': this.address,
+      'phone': this.phone,
+      'user': this.user,
+      'password': this.password,
+      'avata': this.avata,
+      'lat': this.lat,
+      'lng': this.lng,
+      'created_at': this.created_at,
+      'updated_at': this.updated_at,
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      id: map['id'],
-      name: map['name'],
-      type: map['type'],
-      address: map['address'],
-      phone: map['phone'],
-      user: map['user'],
-      password: map['password'],
-      avata: map['avata'],
-      lat: map['lat'],
-      lng: map['lng'],
-      createdAt: map['createdAt'],
-      updatedAt: map['updatedAt'],
+      id: map['id'] as int,
+      name: map['name'] as String,
+      type: map['type'] as String,
+      address: map['address'] as String,
+      phone: map['phone'] as String,
+      user: map['user'] as String,
+      password: map['password'] as String,
+      avata: map['avata'] as String,
+      lat: map['lat'] as String,
+      lng: map['lng'] as String,
+      created_at: map['created_at'] as String,
+      updated_at: map['updated_at'] as String,
     );
   }
 
-  String toJson() => json.encode(toMap());
-
-  factory UserModel.fromJson(String source) =>
-      UserModel.fromMap(json.decode(source));
-
-  @override
-  String toString() {
-    return 'UserModel(id: $id, name: $name, type: $type, address: $address, phone: $phone, user: $user, password: $password, avata: $avata, lat: $lat, lng: $lng, createdAt: $createdAt, updatedAt: $updatedAt)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is UserModel &&
-        other.id == id &&
-        other.name == name &&
-        other.type == type &&
-        other.address == address &&
-        other.phone == phone &&
-        other.user == user &&
-        other.password == password &&
-        other.avata == avata &&
-        other.lat == lat &&
-        other.lng == lng &&
-        other.createdAt == createdAt &&
-        other.updatedAt == updatedAt;
-  }
-
-  @override
-  int get hashCode {
-    return id.hashCode ^
-        name.hashCode ^
-        type.hashCode ^
-        address.hashCode ^
-        phone.hashCode ^
-        user.hashCode ^
-        password.hashCode ^
-        avata.hashCode ^
-        lat.hashCode ^
-        lng.hashCode ^
-        createdAt.hashCode ^
-        updatedAt.hashCode;
-  }
+//</editor-fold>
 }
