@@ -3,6 +3,7 @@ import 'package:flutter2_test_firebase/states/add_product.dart';
 import 'package:flutter2_test_firebase/states/authen.dart';
 import 'package:flutter2_test_firebase/states/buyer_service.dart';
 import 'package:flutter2_test_firebase/states/create_account.dart';
+import 'package:flutter2_test_firebase/states/edit_profile_seller.dart';
 import 'package:flutter2_test_firebase/states/rider_service.dart';
 import 'package:flutter2_test_firebase/states/saler_service.dart';
 import 'package:flutter2_test_firebase/states/test.dart';
@@ -16,6 +17,7 @@ final Map<String, WidgetBuilder> map = {
   '/salerService' : (BuildContext context) => SalerService(),
   '/riderService' : (BuildContext context) => RiderService(),
   '/addProduct' : (BuildContext context) => AddProduct(),
+  // '/editProfileSeller' : (BuildContext context) => EditProfileSeller(),
   '/testPage' : (BuildContext context) => TestPage(),
 };
 

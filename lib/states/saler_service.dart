@@ -14,7 +14,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SalerService extends StatefulWidget
 {
-  const SalerService({Key? key}) : super(key: key);
+  final indexWidget;
+  const SalerService({Key? key, this.indexWidget}) : super(key: key);
 
   @override
   _SalerServiceState createState() => _SalerServiceState();
@@ -33,6 +34,12 @@ class _SalerServiceState extends State<SalerService>
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    if(widget.indexWidget != null)
+    {
+      indexWidget = widget.indexWidget;
+    }
+
     findUserModel();
   }
 
@@ -48,6 +55,8 @@ class _SalerServiceState extends State<SalerService>
       var rs = jsonDecode(value.data);
       if(rs["data"] != null)
       {
+        print("<====================== ======================>");
+        print(rs["data"]);
         setState(() {
           userModel = UserModel.fromMap(rs["data"]);
           widgets.add(ShowOrderSeller());

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter2_test_firebase/model/user_model.dart';
+import 'package:flutter2_test_firebase/states/edit_profile_seller.dart';
 import 'package:flutter2_test_firebase/utility/my_constant.dart';
 import 'package:flutter2_test_firebase/widgets/show_progress.dart';
 import 'package:flutter2_test_firebase/widgets/show_title.dart';
@@ -29,6 +30,14 @@ class _ShopManageSellerState extends State<ShopManageSeller> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor : MyConstant.primary,
+        child: Icon(Icons.edit),
+        onPressed: ()  {
+          MaterialPageRoute route = MaterialPageRoute(builder: (context) => EditProfileSeller( userModel : userModel! ) );
+          Navigator.push(context, route );
+        }
+      ),
       body: SingleChildScrollView(
         child: LayoutBuilder(builder: (context, constraints) => Padding(
           padding: const EdgeInsets.all(8.0),
